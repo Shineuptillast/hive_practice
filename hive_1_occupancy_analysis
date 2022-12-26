@@ -28,5 +28,10 @@
 ## Check the existence of data in table using Select query
 6. Select * from occupancy limit 5;
 
-## 
+## To know the metadata 
+7. describe formatted occupancy
+
+## Query the table to better the understanding of data
+8. Select avg(temp) from occupancy;
+
       
