@@ -1,0 +1,56 @@
+## Creating a External table 
+
+
+## Analysing and storing the data in the hive external table;
+
+## First of all copy the dataset from local machine to cloudera sandbox local machine using FileZilla
+
+## Transfer the file from local machine to hdfs 
+hadoop fs -mkdir /estate_external_table
+
+hadoop fs -put /tmp/new_practice/external_table/real_estate.csv" /estate_external_table
+
+## Start hive 
+## Using the same database created before --> Practice_1.db
+
+use practice_1;
+
+create external table real_estate
+     (
+     tid int,
+     property string,
+     building_z string,
+     open_date string,
+     listing_agency string,
+     price string,
+     city string,
+     zip_code string,
+     phone string,
+     product_depth string,
+     bed_n int,
+     bath_n int,
+     parking_n int
+     )
+     row format delimited
+     fields terminated by ","
+     location "/estate_external_table/";
+     
+     
+     ##
+     Select * from real_estate limit 5;
+     
+     
+     ## No of properties with 2 bedroom 
+     select count(bed_n) from real_estate where bed_n=2;
+     
+     ## Output 
+       44
+     
+     ## Different types of property type
+     select distinct(product_depth) from real_estate;
+     
+     ##Output
+     4
+     
+    
+     
