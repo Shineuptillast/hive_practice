@@ -1,0 +1,32 @@
+## create a databases
+1. create database practice_1;
+
+## Check the existence of the databases created above 
+2. show databases;
+
+## Using the database created above
+3. use practice_1;
+
+## Create a Table for Occupancy dataset
+4. create table occupancy (
+      date string,
+      temp float,
+      humid float,
+      light float,
+      co_2 float,
+      humid_ratio float,
+      occupancy int
+      )
+      row format delimited
+      fields terminated by ",";
+ 
+## Copy dataset into cloudera sandbox local system using filezilla
+
+## Load data into table created above 
+5. load data local inpath "file:///tmp/new_practice/new_practice.csv" into table occupancy;
+
+## Check the existence of data in table using Select query
+6. Select * from occupancy limit 5;
+
+## 
+      
