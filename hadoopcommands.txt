@@ -1,0 +1,38 @@
+hadoop fs -ls /user/hive
+
+hadoop fs -ls /user/hive/warehouse
+
+hadoop fs -ls /user/hive/warehouse/hive_class_b1*
+
+hadoop fs -ls /user/hive/warehouse/hive_class_b1.db/dept_data
+
+
+mkdir hive_lab
+
+ls
+
+cat dept_dept.csv
+
+cd /tmp
+
+mkdir hive_class
+
+cp /home/cloudera/hive_lab/dept_data.csv /tmp/hive_class/
+
+hadoop fs -ls /user/hive/warehouse/hive_class_b1.db/dept_data*
+
+
+hadoop fs -mkdir /user/hive_lab
+
+hadoop fs -put /home/cloudera/hive_lab/dept_data.csv /user/hive_lab
+
+
+
+
+
+
+
+
+
+
+
