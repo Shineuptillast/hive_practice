@@ -17,3 +17,34 @@ show databases;
 
 describe formatted dept_data;
 
+load data local inpath 'file:///home/cloudera/hive_class_lab/dept_data.csv' into table dept_data;
+
+
+select * from dept_data;
+
+select count(*) from dept_data;
+
+create table dept_data_hdfs(
+dept_id,
+dept_name string,
+mang_id int,
+salary int
+)
+row format delimited
+fields terminated by ',';
+
+load data inpath 'user/hive_lab' into table dept_data_hdfs;
+
+create external table dept_data_external(
+     dept_id int,
+     dept_name string,
+     mang_id int,
+     salary int
+     )
+     row format delimited
+     fields terminated by ','
+     location '/tmp/hive_class_lab/';
+
+
+
+
