@@ -1,0 +1,19 @@
+create database hive_class_b1;
+use hive_class_b1;
+
+create table dept_data(
+dept_id int,
+dept_name string,
+manager_id int,
+salary int
+)
+row format delimited
+fields terminated by ',';
+
+describe hive_class_b1;
+
+show tables;
+show databases;
+
+describe formatted dept_data;
+
