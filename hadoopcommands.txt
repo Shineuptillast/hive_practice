@@ -26,6 +26,10 @@ hadoop fs -mkdir /user/hive_lab
 
 hadoop fs -put /home/cloudera/hive_lab/dept_data.csv /user/hive_lab
 
+touch array_data.csv
+
+touch map_data.csv
+
 
 
 
