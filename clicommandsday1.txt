@@ -47,4 +47,26 @@ create external table dept_data_external(
 
 
 
+create table employee(
+id int,
+name string,
+skills array<string>
+)
+row format delimited 
+fields terminated by','
+collection items terminated by ':';
+
+load data local inpath 'file:///home/cloudera/Desktop/array_data.csv' into table employee;
+
+create table map_data(
+id int,
+name string,
+details map<string,string>
+)
+row format delimited
+fields terminated by ','
+collection items terminated by '|'
+map keys terminated by ':';
+
+load data local inpath "file;///home/cloudera/Desktop/map_data.csv" into table map_data;
 
