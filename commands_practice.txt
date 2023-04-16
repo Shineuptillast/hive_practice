@@ -1,0 +1,102 @@
+Covid data is transferred from local machine to the Local file system of the virtual machine using file zilla.
+
+Files are transferred to the hdfs file system.
+
+
+Creating table from local file system
+
+hdfs dfs -ls /user 
+
+Making a new directory -->
+hdfs fs -mkdir /user/hive_practice
+
+Copying file into hdfs from local 
+
+hdfs dfs -put /home/cloudera/Desktop/covid_data.csv /user/hive_practice
+
+now entering hive cli
+
+hive
+
+create database hive_practice;
+
+use hive_practice;
+
+create table covid_data(
+dob date,
+country string,
+total_confirmed int,
+total_deaths int,
+total_recovered int,
+total_active int,
+new_cases int,
+new_deaths int,
+new_recovered int,
+who_region string
+)
+row format delimited 
+fields terminated by ',';
+
+describe formatted covid_data;
+
+creating an internal table and loading data from hdfs
+
+create table covid_data_hdfs(
+date_of_case date,
+country string,
+total_cases int,
+total_deaths int,
+total_recovery int,
+total_active int,
+new_cases int,
+new_deaths int,
+new_recovery int,
+who_region string)
+row format delimited 
+fields terminated by ',';
+
+load data inpath '/user/hive_lab/' into table covid_data_hdfs;
+
+
+creating an external table having data within the hdfs location
+
+again copying the data into the hdfs location
+
+hdfs dfs -put '/home/cloudera/Desktop/covid_data.csv /user/hive_lab/
+
+
+DATA ANALYSIS
+
+1)
+TOTAL NUMBER OF CASES BY COUNTRY
+SELECT COUNTRY, SUM(NEW_CASES) FROM COVID_DATA GROUP BY COUNTRY;
+
+2)
+TOTAL NUMBER OF DEATHS BY COUNTRY 
+SELECT COUNTRY , SUM(NEW_DEATHS) FROM COVID_DATA GROUP BY COUNTRY
+
+3)
+TOTAL NUMBER OF DEATHS REGION WISE
+SELECT WHO_REGION, SUM(NEW_DEATHS) FROM COVID_DATA GROUP BY WHO_REGION;
+
+4)
+REGION HAVING THE MINIMUM NUMBER OF DEATHS
+SELECT WHO_REGION, SUM(NEW_DEATHS) AS C_1 FROM COVID_DATA GROUP BY WHO_REGION ORDER BY C_1;
+
+5) 
+REGION IMPACTED MAXIMUM BY THE COVID 
+SELECT WHO_REGION, SUM(NEW_DEATHS) C_1 FROM COVID_DATA GROUP BY WHO_REGION ORDER BY C_1 DESC LIMIT 1;
+
+6)
+REGION THAT HAS DEALT WITH COVID EFFICIENTLY
+SELECT WHO_REGION, SUM(NEW_RECOVERY) C_1 FROM COVID_DATA GROUP BY WHO_REGION ORDER BY C_1;
+
+7)
+COUNTRY THAT HAVE MOST RECOVERED PATIENTS
+SELECT COUNTRY , SUM(NEW_RECOVERED) C_1 FROM COVID_DATA GROUP BY COUNTRY ORDER BY C_1 DESC LIMIT 1;
+
+
+
+
+
+
