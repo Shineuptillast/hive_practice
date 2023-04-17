@@ -1,0 +1,30 @@
+Creating a sample file for today queries
+
+vim sales_data.csv
+
+hdfs dfs -put /home/cloudera/Desktop/sales_data.csv /user/hive_lab
+
+create table sales_data(
+prod_type string,
+total_sales int)
+row format delimited
+fields terminated by ',';
+
+load data local inpath '/home/cloudera/Desktop/sales_data.csv' into table sales_data
+
+
+Creating a duplicate table
+
+create table sales_data_bckp as select * from sales_data;
+
+
+create table sales_data_newpq
+(
+prod_type string,
+total_sales int
+)
+stored as parquet;
+
+from sales_data_pq insert overwrite table sales_data_new_pq select *;
+
+
