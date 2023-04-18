@@ -1,0 +1,40 @@
+Creating an orc format data 
+
+vim data.csv
+
+hdfs dfs -mkdir /uer/hive_lab/practice
+
+hdfs dfs -put data.csv /user/hive_lab/practice
+
+
+create table items(
+prod_id int,
+prod_name string,
+prod_price int
+)
+row format delimited
+fields terminated by ',';
+
+load data inpath '/user/hive_lab/practice' into table items
+
+
+Create table items_orc
+(
+prod_id int,
+prod_name string,
+prod_price int
+)
+stored as orc;
+
+from items insert overwrite table items_orc select *;
+
+select * from items_orc;
+
+
+
+hdfs dfs -ls /user/hive/warehouse/hive_class_b1.db/items_orc
+
+hdfs dfs -cat /user/hive/warehouse/hive_class_b1.db/items_orc/000000_0
+
+
+
