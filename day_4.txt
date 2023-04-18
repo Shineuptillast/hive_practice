@@ -1,0 +1,38 @@
+
+vim csv_file.csv
+
+hdfs dfs -mkdir /user/hive_lab/practice_2
+hdfs dfs -put csv_file.csv /user/hive_lab/practice-2
+
+hive
+
+use hive_class_b1;
+
+create table csv_table
+     (
+     name string,
+     location string
+     )row format serde 'org.apache.hadoop.hive.serde2.OpenCSVSerde'
+     with serdeproperties (
+     "separatorChar"=",",
+     "quoteChar"="\"",
+     "escapeChar"="\\"
+     )
+     stored as textfile
+     tblproperties("skip.header.line.count="1");
+
+load data inpath '/user/hive_lab/practice2' into table csv_table;
+
+describe formatted csv_table;
+
+select * from csv_table;
+
+
+add /home/cloudera/Desktop/hive_documents/hive-hcatalog-core-0.14.0.jar
+
+vim json_file.json
+
+
+cat json_file.json
+
+
