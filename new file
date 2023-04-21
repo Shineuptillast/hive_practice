@@ -1,0 +1,9 @@
+create table json_table(
+     name string,
+     id int,
+     skills array<string>
+     )
+     row format serde 'org.apache.hive.hcatalog.data.JsonSerDe'
+stored as textfile;
+
+FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. Cannot validate serde: org.apache.hive.hcatalog.data.JsonSerDe
