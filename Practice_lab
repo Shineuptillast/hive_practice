@@ -1,0 +1,11 @@
+john,{age:23|gender:male}
+
+create table practice2(
+name string,
+details map<string,string>
+)
+row format delimited 
+fields terminated by ','
+collection items terminated by '|' 
+map keys terminated by ':';
+load data local inpath 'file:///data.txt' into table practice2;
