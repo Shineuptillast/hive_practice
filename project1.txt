@@ -138,9 +138,9 @@ select qtr_id, sum(sales) total_sales from vehicle_sales_orc_ group by qtr_id;
 
 select country, qtr_id, sum(sales) total_sales from vehicle_sales_orc_ group by country, qtr_id;
 
-) find the product for which maximum orders were placed
+8) find the product for which maximum orders were placed
 
-select product_type, sum(quantity) total_quantity from vehicle_sales_orc_ group  by product_type;
+select product_type, sum(quantity) total_quantity from vehicle_sales_orc_ group  by product_type having total_quanity = (select max(a.total_quantity) from (select product_type, sum(quantity) total_quantity from vehicle_sales_orc_ group  by product_type) a) b;
 
 
 
