@@ -1,0 +1,160 @@
+create database hive_project;
+
+use hive_project;
+
+create table sales_details
+(
+    month_of_sale string,
+    year_of_sale int,
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+row format delimited 
+fields terminated by ','
+ tblproperties(
+    'skip.header.line.count'='1'
+);
+
+load data local inpath '/config/workspace/data.csv' into table sales_details;
+
+create external table sales_details_orc_ext
+(
+    month_of_sale string,
+    year_of_sale int,
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+stored as orc;
+
+
+create table sales_details_year_parition
+(
+    month_of_sale string,
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+partitioned by(year_of_sale int)
+stored as orc;
+
+insert overwrite table sales_details_year_parition partition(year_of_sale = 2014) select month_of_sale
+, customer_age, age_group, customer_gender, country, state, product_category, sub_category, product,
+     order_quantity, unit_cost, unit_price, profit, cost, revenue from sales_details_orc where year_of_sale =2014;
+
+
+
+
+add sales_details_year_parition add partition(year_of_sale=2015);
+
+
+
+
+insert into sales_details_year_parition partition(year_of_sale=2015) select month_of_sale, 
+customer_age, age_group, customer_gender, country, state, product_category, sub_category, product, 
+order_quantity, unit_cost, unit_price, profit, cost, revenue from sales_details where year_of_sale=2015;
+
+
+
+create table sales_details_year_parition_dy
+(
+    month_of_sale string,
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+partitioned by(year_of_sale int)
+stored as orc;
+
+from sales_details insert overwrite table sales_details_year_parition_dy partition(year_of_sale) select month_of_sale, customer_age, age_group, customer_gender,country, state, product_category, sub_category, product, order_quantity, unit_cost, unit_price, profit, cost, revenue, year_of_sale;
+
+create table sales_details_year_parition_st_2
+(
+    
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+partitioned by(year_of_sale int, month_of_sale string)
+stored as orc;
+select  customer_age, age_group, customer_gender,country, state, product_category, sub_category, product, order_quantity, unit_cost, unit_price, profit, cost, revenue;
+
+insert overwrite table sales_details_year_parition_st_2 partition(year_of_sale=2014, month_of_sale='March') select  customer_age, age_group, customer_gender,country, state, product_category, sub_category, product, order_quantity, unit_cost, unit_price, profit, cost, revenue from sales_details where year_of_sale=2014 and month_of_sale='March' ;
+
+create table sales_details_year_parition_dy_2
+(
+    customer_age int,
+    age_group string,
+    customer_gender string,
+    country string,
+    state string,
+    product_category string,
+    sub_category string,
+    product string,
+    order_quantity int,
+    unit_cost int,
+    unit_price int,
+    profit int,
+    cost int,
+    revenue int
+)
+partitioned by( month_of_sale string, year_of_sale int)
+stored as orc;
+
+insert overwrite table sales_details_year_parition_dy_2 partition( month_of_sale , year_of_sale) select  customer_age, age_group, customer_gender,country, state, product_category, sub_category, product, order_quantity, unit_cost, unit_price, profit, cost, revenue, month_of_sale , year_of_sale from sales_details;
